@@ -13,26 +13,44 @@ part of openapi.api;
 class Product {
   /// Returns a new [Product] instance.
   Product({
-    required this.questionText,
+    required this.name,
+    required this.description,
+    required this.image,
+    required this.price,
   });
 
-  String questionText;
+  String name;
+
+  String description;
+
+  String image;
+
+  num price;
 
   @override
   bool operator ==(Object other) => identical(this, other) || other is Product &&
-     other.questionText == questionText;
+     other.name == name &&
+     other.description == description &&
+     other.image == image &&
+     other.price == price;
 
   @override
   int get hashCode =>
     // ignore: unnecessary_parenthesis
-    (questionText.hashCode);
+    (name.hashCode) +
+    (description.hashCode) +
+    (image.hashCode) +
+    (price.hashCode);
 
   @override
-  String toString() => 'Product[questionText=$questionText]';
+  String toString() => 'Product[name=$name, description=$description, image=$image, price=$price]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'question_text'] = this.questionText;
+      json[r'name'] = this.name;
+      json[r'description'] = this.description;
+      json[r'image'] = this.image;
+      json[r'price'] = this.price;
     return json;
   }
 
@@ -55,7 +73,10 @@ class Product {
       }());
 
       return Product(
-        questionText: mapValueOfType<String>(json, r'question_text')!,
+        name: mapValueOfType<String>(json, r'name')!,
+        description: mapValueOfType<String>(json, r'description')!,
+        image: mapValueOfType<String>(json, r'image')!,
+        price: num.parse(json[r'price'].toString()),
       );
     }
     return null;
@@ -105,7 +126,10 @@ class Product {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
-    'question_text',
+    'name',
+    'description',
+    'image',
+    'price',
   };
 }
 

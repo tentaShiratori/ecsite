@@ -1,45 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:openapi/api.dart';
 import 'package:get/get.dart';
+
+import '../domain/product_repository.dart';
+import '../driver/product_repository_imple.dart';
 
 class Home extends HookWidget {
   final String title;
+
   const Home({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
+    var productRepository = Get.find<ProductRepository>();
     var counter = useState(0);
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
     return Scaffold(
       appBar: AppBar(
-        // Here we take the value from the MyHomePage object that was created by
-        // the App.build method, and use it to set our appbar title.
         title: Text(title),
       ),
       body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
         child: Column(
-          // Column is also a layout widget. It takes a list of children and
-          // arranges them vertically. By default, it sizes itself to fit its
-          // children horizontally, and tries to be as tall as its parent.
-          //
-          // Invoke "debug painting" (press "p" in the console, choose the
-          // "Toggle Debug Paint" action from the Flutter Inspector in Android
-          // Studio, or the "Toggle Debug Paint" command in Visual Studio Code)
-          // to see the wireframe for each widget.
-          //
-          // Column has various properties to control how it sizes itself and
-          // how it positions its children. Here we use mainAxisAlignment to
-          // center the children vertically; the main axis here is the vertical
-          // axis because Columns are vertical (the cross axis would be
-          // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -49,11 +29,36 @@ class Home extends HookWidget {
               '${counter.value}',
               style: Theme.of(context).textTheme.headline4,
             ),
+            FutureBuilder(
+                future: productRepository.list(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Text("読み込み中");
+                  }
+                  var data = snapshot.data;
+                  if (snapshot.hasData && data != null) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return Column(children: [
+                          Image(
+                            image: NetworkImage(data[index].image),
+                          ),
+                          Text(data[index].name)
+                        ]);
+                      },
+                    );
+                  }
+                  return Text("データが存在しません");
+                })
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){counter.value++;},
+        onPressed: () {
+          counter.value++;
+        },
         tooltip: 'Increment',
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.

@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: ''
+  title: "Amazon\u307F\u305F\u3044\u306AEC\u30B5\u30A4\u30C8"
   version: ''
 paths:
   /:
@@ -143,8 +143,17 @@ components:
     Product:
       type: object
       properties:
-        question_text:
+        name:
           type: string
           maxLength: 200
+        description:
+          type: string
+        image:
+          type: string
+        price:
+          type: number
       required:
-      - question_text
+      - name
+      - description
+      - image
+      - price
