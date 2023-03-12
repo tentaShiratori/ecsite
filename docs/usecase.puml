@@ -1,0 +1,12 @@
+@startuml
+left to right direction
+actor ユーザー as u
+actor 管理者 as a
+package 商品 {
+  usecase "ユーザーは商品一覧が見える" as UC1
+  usecase "管理者は商品の追加ができる" as UC2
+}
+
+u --> UC1
+a --> UC2
+@enduml

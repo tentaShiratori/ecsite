@@ -1,0 +1,5 @@
+@startuml
+object ユーザー
+object 管理者
+object 商品
+@enduml
