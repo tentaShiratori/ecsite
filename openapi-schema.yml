@@ -3,7 +3,7 @@ info:
   title: "Amazon\u307F\u305F\u3044\u306AEC\u30B5\u30A4\u30C8"
   version: ''
 paths:
-  /:
+  /products/:
     get:
       operationId: listProducts
       description: ''
@@ -18,7 +18,7 @@ paths:
                   $ref: '#/components/schemas/Product'
           description: ''
       tags:
-      - ''
+      - products
     post:
       operationId: createProduct
       description: ''
@@ -42,8 +42,8 @@ paths:
                 $ref: '#/components/schemas/Product'
           description: ''
       tags:
-      - ''
-  /{id}/:
+      - products
+  /products/{id}/:
     get:
       operationId: retrieveProduct
       description: ''
@@ -51,7 +51,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this product.
+        description: ''
         schema:
           type: string
       responses:
@@ -62,7 +62,7 @@ paths:
                 $ref: '#/components/schemas/Product'
           description: ''
       tags:
-      - '{id}'
+      - products
     put:
       operationId: updateProduct
       description: ''
@@ -70,7 +70,7 @@ paths:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this product.
+        description: ''
         schema:
           type: string
       requestBody:
@@ -92,37 +92,7 @@ paths:
                 $ref: '#/components/schemas/Product'
           description: ''
       tags:
-      - '{id}'
-    patch:
-      operationId: partialUpdateProduct
-      description: ''
-      parameters:
-      - name: id
-        in: path
-        required: true
-        description: A unique integer value identifying this product.
-        schema:
-          type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Product'
-          application/x-www-form-urlencoded:
-            schema:
-              $ref: '#/components/schemas/Product'
-          multipart/form-data:
-            schema:
-              $ref: '#/components/schemas/Product'
-      responses:
-        '200':
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Product'
-          description: ''
-      tags:
-      - '{id}'
+      - products
     delete:
       operationId: destroyProduct
       description: ''
@@ -130,14 +100,14 @@ paths:
       - name: id
         in: path
         required: true
-        description: A unique integer value identifying this product.
+        description: ''
         schema:
           type: string
       responses:
         '204':
           description: ''
       tags:
-      - '{id}'
+      - products
 components:
   schemas:
     Product:
@@ -150,10 +120,11 @@ components:
           type: string
         image:
           type: string
+          readOnly: true
         price:
           type: number
       required:
       - name
       - description
-      - image
       - price
+      - image
