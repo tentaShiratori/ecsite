@@ -1,8 +1,8 @@
-from django.urls import include,path
-from . import views
+from django.urls import include, path
+from .views import products
 from rest_framework import routers, serializers, viewsets
 
 urlpatterns = [
-    path('products/', views.ProductList.as_view()),
-    path('products/<int:pk>/', views.ProductDetail.as_view()),
+    path("products/", products.ProductList.as_view()),
+    path("products/<int:pk>/", products.ProductDetail.as_view()),
 ]
