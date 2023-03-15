@@ -23,3 +23,22 @@ jobs:
         run: |
           flutter format lib --set-exit-if-changed 
         working-directory: front
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '2.18.5'
+          channel: 'stable'
+          cache: true
+      - name: Pub get
+        run: flutter pub get
+        working-directory: front
+      - name: Lint code
+        shell: bash
+        run: |
+          flutter analyze lib
+        working-directory: front
