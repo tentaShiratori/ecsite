@@ -40,14 +40,14 @@ Please follow the [installation procedure](#installation--usage) and then run th
 import 'package:openapi/api.dart';
 
 
-final api_instance = DefaultApi();
+final api_instance = ProductsApi();
 final product = Product(); // Product | 
 
 try {
     final result = api_instance.createProduct(product);
     print(result);
 } catch (e) {
-    print('Exception when calling DefaultApi->createProduct: $e\n');
+    print('Exception when calling ProductsApi->createProduct: $e\n');
 }
 
 ```
@@ -58,12 +58,11 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
-*DefaultApi* | [**createProduct**](doc\/DefaultApi.md#createproduct) | **POST** / | 
-*DefaultApi* | [**listProducts**](doc\/DefaultApi.md#listproducts) | **GET** / | 
-*IdApi* | [**destroyProduct**](doc\/IdApi.md#destroyproduct) | **DELETE** /{id}/ | 
-*IdApi* | [**partialUpdateProduct**](doc\/IdApi.md#partialupdateproduct) | **PATCH** /{id}/ | 
-*IdApi* | [**retrieveProduct**](doc\/IdApi.md#retrieveproduct) | **GET** /{id}/ | 
-*IdApi* | [**updateProduct**](doc\/IdApi.md#updateproduct) | **PUT** /{id}/ | 
+*ProductsApi* | [**createProduct**](doc\/ProductsApi.md#createproduct) | **POST** /products/ | 
+*ProductsApi* | [**destroyProduct**](doc\/ProductsApi.md#destroyproduct) | **DELETE** /products/{id}/ | 
+*ProductsApi* | [**listProducts**](doc\/ProductsApi.md#listproducts) | **GET** /products/ | 
+*ProductsApi* | [**retrieveProduct**](doc\/ProductsApi.md#retrieveproduct) | **GET** /products/{id}/ | 
+*ProductsApi* | [**updateProduct**](doc\/ProductsApi.md#updateproduct) | **PUT** /products/{id}/ | 
 
 
 ## Documentation For Models

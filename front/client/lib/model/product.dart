@@ -76,7 +76,9 @@ class Product {
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description')!,
         image: mapValueOfType<String>(json, r'image')!,
-        price: num.parse(json[r'price'].toString()),
+        price: json[r'price'] == null
+            ? null
+            : num.parse(json[r'price'].toString()),
       );
     }
     return null;

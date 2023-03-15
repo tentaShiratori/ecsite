@@ -1,4 +1,7 @@
 /* eslint-disable */
 export type Product = {
-  question_text: string;
+  name: string;
+  description: string;
+  image: string;
+  price: number;
 };
