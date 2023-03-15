@@ -1,4 +1,4 @@
-name: Analyze Front
+name: Lint Front code
 
 on:
   pull_request:
@@ -12,7 +12,7 @@ jobs:
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '2.18.5'
+          flutter-version: '3.7.7'
           channel: 'stable'
           cache: true
       - name: Pub get
@@ -22,4 +22,23 @@ jobs:
         shell: bash
         run: |
           flutter format lib --set-exit-if-changed 
+        working-directory: front
+  analyze:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Install Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.7.7'
+          channel: 'stable'
+          cache: true
+      - name: Pub get
+        run: flutter pub get
+        working-directory: front
+      - name: Lint code
+        shell: bash
+        run: |
+          flutter analyze lib
         working-directory: front
