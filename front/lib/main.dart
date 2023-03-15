@@ -21,23 +21,3 @@ class MyApp extends StatelessWidget {
         initialBinding: InitialBindings());
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
