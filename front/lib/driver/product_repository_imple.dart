@@ -10,19 +10,14 @@ class ProductRepositoryImple extends GetxService implements ProductRepository {
 
   @override
   Future<List<Product>> list() async {
-    try {
-      var products = await this.api.listProducts();
-      if (products == null) return [];
-      return products
-          .map((e) => Product(
-              image: e.image,
-              name: e.name,
-              price: e.price.toDouble(),
-              description: e.description))
-          .toList();
-    } catch (e) {
-      print(e);
-      throw e;
-    }
+    var products = await api.listProducts();
+    if (products == null) return [];
+    return products
+        .map((e) => Product(
+            image: e.image,
+            name: e.name,
+            price: e.price.toDouble(),
+            description: e.description))
+        .toList();
   }
 }

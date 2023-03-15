@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 import '../domain/product_repository.dart';
-import '../driver/product_repository_imple.dart';
 
 class Home extends HookWidget {
   final String title;
@@ -27,13 +26,13 @@ class Home extends HookWidget {
             ),
             Text(
               '${counter.value}',
-              style: Theme.of(context).textTheme.headline4,
+              style: Theme.of(context).textTheme.headlineMedium,
             ),
             FutureBuilder(
                 future: productRepository.list(),
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Text("読み込み中");
+                    return const Text("読み込み中");
                   }
                   var data = snapshot.data;
                   if (snapshot.hasData && data != null) {
@@ -50,7 +49,7 @@ class Home extends HookWidget {
                       },
                     );
                   }
-                  return Text("データが存在しません");
+                  return const Text("データが存在しません");
                 })
           ],
         ),

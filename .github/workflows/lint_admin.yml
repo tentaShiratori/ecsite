@@ -4,7 +4,7 @@ on:
   pull_request:
 
 jobs:
-  lint_and_format:
+  lint:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -22,6 +22,20 @@ jobs:
         working-directory: admin
         run: |
           yarn eslint $(git ls-files '*.ts' '*.tsx')
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: yarn
+          cache-dependency-path: | 
+            admin/yarn.lock
+      - name: Yarn install
+        working-directory: admin
+        run: |
+          yarn install --frozen-lockfile
       - name: Code format 
         working-directory: admin
         run: |
@@ -40,7 +54,7 @@ jobs:
         working-directory: admin
         run: |
           yarn install --frozen-lockfile
-      - name: Lint code 
+      - name: Type check
         working-directory: admin
         run: |
           yarn tsc --noEmit
