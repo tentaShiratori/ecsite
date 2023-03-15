@@ -13,12 +13,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-      primarySwatch: Colors.blue,
-      ),
-      home: const Home(title: 'Flutter Demo Home Page'),
-      initialBinding: InitialBindings()
-    );
+        title: 'Flutter Demo',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: const Home(title: 'Flutter Demo Home Page'),
+        initialBinding: InitialBindings());
   }
 }
