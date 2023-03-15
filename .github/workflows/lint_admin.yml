@@ -1,0 +1,47 @@
+name: Lint Admin code
+
+on:
+  pull_request:
+
+jobs:
+  lint_and_format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: yarn
+          cache-dependency-path: | 
+            admin/yarn.lock
+      - name: Yarn install
+        working-directory: admin
+        run: |
+          yarn install --frozen-lockfile
+      - name: Lint code 
+        working-directory: admin
+        run: |
+          yarn eslint $(git ls-files '*.ts' '*.tsx')
+      - name: Code format 
+        working-directory: admin
+        run: |
+          yarn prettier --check $(git ls-files '*.ts' '*.tsx')
+  type_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: yarn
+          cache-dependency-path: | 
+            admin/yarn.lock
+      - name: Yarn install
+        working-directory: admin
+        run: |
+          yarn install --frozen-lockfile
+      - name: Lint code 
+        working-directory: admin
+        run: |
+          yarn tsc --noEmit
+

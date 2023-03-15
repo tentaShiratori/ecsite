@@ -1,0 +1,47 @@
+name: Lint Python code
+
+on:
+  pull_request:
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'poetry'
+          cache-dependency-path: |
+            back/poetry.lock
+      - name: Install Dependencies 
+        working-directory: back
+        run: |
+          poetry install
+      - name: Code format 
+        working-directory: back
+        run: |
+          poetry run black --check $(git ls-files '*.py')
+  type_check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+          cache: 'poetry'
+          cache-dependency-path: |
+            back/poetry.lock
+      - name: Install Dependencies
+        working-directory: back
+        run: |
+          poetry install
+      - name: Type Check
+        working-directory: back
+        run: |
+          poetry run pyright $(git ls-files '*.py')
+
