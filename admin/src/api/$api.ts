@@ -1,3 +1,4 @@
+import type { AspidaClient, BasicHeaders } from "aspida";
 import type { Methods as Methods0 } from "./products";
 import type { Methods as Methods1 } from "./products/_id@string";
 

@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "format": "yarn prettier ./**/*.ts ./**/*.tsx --write",
+    "format": "prettier ./**/*.ts ./**/*.tsx --write",
     "generateByOpenapi": "npx openapi2aspida -i ../openapi-schema.yml -o src/api",
     "pathpida": "pathpida"
   },

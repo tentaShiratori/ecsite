@@ -19,7 +19,7 @@ class CustomSchema(AutoSchema):
 
 
 class ProductSerializer(serializers.HyperlinkedModelSerializer):
-    image = serializers.SerializerMethodField()
+    image = serializers.ImageField()
 
     class Meta:
         model = Product
