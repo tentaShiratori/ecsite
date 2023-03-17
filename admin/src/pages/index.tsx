@@ -17,7 +17,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <Link href={pagesPath.products.create.$url()}>商品を作成する</Link>
+        <Link href={pagesPath.products.new.$url()}>商品を作成する</Link>
       </main>
     </>
   );
