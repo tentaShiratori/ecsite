@@ -1,10 +1,8 @@
 from django.test import TestCase
 from src.models import Product
 from rest_framework.test import APIClient
-from rest_framework.test import APIRequestFactory
 import json
 from django.core.files import File
-from django.core.files.uploadedfile import SimpleUploadedFile
 import shutil
 from django.test import override_settings
 
@@ -14,16 +12,15 @@ from django.test import override_settings
 class ProductsRequestTestCase(TestCase):
     def setUp(self):
         p = Product(name="hello", description="world", price=1.23)
-        p.image = SimpleUploadedFile(
-            name="test_image.jpg",
-            content=open("./fixture/image/aaa.jpg", "rb").read(),
-            content_type="image/jpeg",
+        p.image.save(
+            "test_image.jpg",
+            File(open("./fixture/image/aaa.jpg", "rb")),
         )
         p.save()
 
     def test_cant_create_without_image(self):
         factory = APIClient()
-        response = factory.get("")
+        response = factory.get("/products/")
         data = json.loads(response.content.decode())
         self.assertEqual(len(data), 1)
         self.assertEqual(data[0]["name"], "hello")
