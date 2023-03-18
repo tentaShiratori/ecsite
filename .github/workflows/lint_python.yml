@@ -23,7 +23,7 @@ jobs:
       - name: Code format 
         working-directory: back
         run: |
-          poetry run black --check $(git ls-files '*.py')
+          poetry run black --check ./
   type_check:
     runs-on: ubuntu-latest
     steps:
@@ -43,5 +43,5 @@ jobs:
       - name: Type Check
         working-directory: back
         run: |
-          poetry run pyright $(git ls-files '*.py')
+          poetry run pyright ./
 

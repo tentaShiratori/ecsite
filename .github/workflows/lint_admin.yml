@@ -21,7 +21,7 @@ jobs:
       - name: Lint code 
         working-directory: admin
         run: |
-          yarn eslint $(git ls-files '*.ts' '*.tsx')
+          yarn lint
   format:
     runs-on: ubuntu-latest
     steps:
@@ -39,7 +39,7 @@ jobs:
       - name: Code format 
         working-directory: admin
         run: |
-          yarn prettier --check $(git ls-files '*.ts' '*.tsx')
+          yarn prettier --check ./**/*.ts ./**/*.tsx
   type_check:
     runs-on: ubuntu-latest
     steps:

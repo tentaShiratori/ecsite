@@ -1,0 +1,29 @@
+name: Test Admin code
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+    tags:        
+      - v*
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 19
+          cache: yarn
+          cache-dependency-path: | 
+            admin/yarn.lock
+      - name: Yarn install
+        working-directory: admin
+        run: |
+          yarn install --frozen-lockfile
+      - name: Test code 
+        working-directory: admin
+        run: |
+          yarn test
