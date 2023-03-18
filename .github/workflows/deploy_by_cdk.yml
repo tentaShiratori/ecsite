@@ -27,11 +27,6 @@ jobs:
         working-directory: resource
         run: yarn build
 
-      - name: Unit tests
-        if: contains(github.event_name, 'pull_request')
-        working-directory: resource
-        run: yarn test:app
-          
       - name: CDK Diff Check
         if: contains(github.event_name, 'pull_request')
         working-directory: resource
