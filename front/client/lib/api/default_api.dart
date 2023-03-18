@@ -7,23 +7,24 @@
 // ignore_for_file: always_put_required_named_parameters_first
 // ignore_for_file: constant_identifier_names
 // ignore_for_file: lines_longer_than_80_chars
-
 part of openapi.api;
 
-
 class DefaultApi {
-  DefaultApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+  DefaultApi([ApiClient? apiClient])
+      : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 
-  /// 
+  ///
   ///
   /// Note: This method returns the HTTP [Response].
   ///
   /// Parameters:
   ///
   /// * [Product] product:
-  Future<Response> createProductWithHttpInfo({ Product? product, }) async {
+  Future<Response> createProductWithHttpInfo({
+    Product? product,
+  }) async {
     // ignore: prefer_const_declarations
     final path = r'/';
 
@@ -34,8 +35,11 @@ class DefaultApi {
     final headerParams = <String, String>{};
     final formParams = <String, String>{};
 
-    const contentTypes = <String>['application/json', 'application/x-www-form-urlencoded', 'multipart/form-data'];
-
+    const contentTypes = <String>[
+      'application/json',
+      'application/x-www-form-urlencoded',
+      'multipart/form-data'
+    ];
 
     return apiClient.invokeAPI(
       path,
@@ -48,27 +52,34 @@ class DefaultApi {
     );
   }
 
-  /// 
+  ///
   ///
   /// Parameters:
   ///
   /// * [Product] product:
-  Future<Product?> createProduct({ Product? product, }) async {
-    final response = await createProductWithHttpInfo( product: product, );
+  Future<Product?> createProduct({
+    Product? product,
+  }) async {
+    final response = await createProductWithHttpInfo(
+      product: product,
+    );
     if (response.statusCode >= HttpStatus.badRequest) {
       throw ApiException(response.statusCode, await _decodeBodyBytes(response));
     }
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
-      return await apiClient.deserializeAsync(await _decodeBodyBytes(response), 'Product',) as Product;
-    
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
+      return await apiClient.deserializeAsync(
+        await _decodeBodyBytes(response),
+        'Product',
+      ) as Product;
     }
     return null;
   }
 
-  /// 
+  ///
   ///
   /// Note: This method returns the HTTP [Response].
   Future<Response> listProductsWithHttpInfo() async {
@@ -84,7 +95,6 @@ class DefaultApi {
 
     const contentTypes = <String>[];
 
-
     return apiClient.invokeAPI(
       path,
       'GET',
@@ -96,7 +106,7 @@ class DefaultApi {
     );
   }
 
-  /// 
+  ///
   Future<List<Product>?> listProducts() async {
     final response = await listProductsWithHttpInfo();
     if (response.statusCode >= HttpStatus.badRequest) {
@@ -105,12 +115,13 @@ class DefaultApi {
     // When a remote server returns no body with a status of 204, we shall not decode it.
     // At the time of writing this, `dart:convert` will throw an "Unexpected end of input"
     // FormatException when trying to decode an empty string.
-    if (response.body.isNotEmpty && response.statusCode != HttpStatus.noContent) {
+    if (response.body.isNotEmpty &&
+        response.statusCode != HttpStatus.noContent) {
       final responseBody = await _decodeBodyBytes(response);
-      return (await apiClient.deserializeAsync(responseBody, 'List<Product>') as List)
-        .cast<Product>()
-        .toList();
-
+      return (await apiClient.deserializeAsync(responseBody, 'List<Product>')
+              as List)
+          .cast<Product>()
+          .toList();
     }
     return null;
   }
