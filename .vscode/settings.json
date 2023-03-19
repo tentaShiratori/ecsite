@@ -5,4 +5,8 @@
     "[typescript][typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "eslint.workingDirectories": [
+        "./resource",
+        "./admin"
+    ],
 }

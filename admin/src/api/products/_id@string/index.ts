@@ -1,16 +1,20 @@
 /* eslint-disable */
-import type * as Types from "./@types";
+import type * as Types from "../../@types";
 
 export type Methods = {
   get: {
     status: 200;
-    resBody: Types.Product[];
+    resBody: Types.Product;
   };
 
-  post: {
-    status: 201;
+  put: {
+    status: 200;
     resBody: Types.Product;
     reqFormat: FormData;
     reqBody: Types.Product;
+  };
+
+  delete: {
+    status: 204;
   };
 };

@@ -4,16 +4,15 @@ import type { Methods as Methods1 } from "./_id@string";
 
 const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
   const prefix = (baseURL === undefined ? "" : baseURL).replace(/\/$/, "");
-
+  const PATH0 = "/products";
   const GET = "GET";
   const POST = "POST";
   const PUT = "PUT";
   const DELETE = "DELETE";
-  const PATCH = "PATCH";
 
   return {
     _id: (val0: string) => {
-      const prefix0 = `/${val0}`;
+      const prefix0 = `${PATH0}/${val0}`;
 
       return {
         get: (option?: { config?: T | undefined } | undefined) =>
@@ -50,26 +49,6 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
           >(prefix, prefix0, PUT, option, "FormData")
             .json()
             .then((r) => r.body),
-        patch: (option: {
-          body: Methods1["patch"]["reqBody"];
-          config?: T | undefined;
-        }) =>
-          fetch<
-            Methods1["patch"]["resBody"],
-            BasicHeaders,
-            Methods1["patch"]["status"]
-          >(prefix, prefix0, PATCH, option, "FormData").json(),
-        $patch: (option: {
-          body: Methods1["patch"]["reqBody"];
-          config?: T | undefined;
-        }) =>
-          fetch<
-            Methods1["patch"]["resBody"],
-            BasicHeaders,
-            Methods1["patch"]["status"]
-          >(prefix, prefix0, PATCH, option, "FormData")
-            .json()
-            .then((r) => r.body),
         delete: (option?: { config?: T | undefined } | undefined) =>
           fetch<void, BasicHeaders, Methods1["delete"]["status"]>(
             prefix,
@@ -94,13 +73,13 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
         Methods0["get"]["resBody"],
         BasicHeaders,
         Methods0["get"]["status"]
-      >(prefix, "", GET, option).json(),
+      >(prefix, PATH0, GET, option).json(),
     $get: (option?: { config?: T | undefined } | undefined) =>
       fetch<
         Methods0["get"]["resBody"],
         BasicHeaders,
         Methods0["get"]["status"]
-      >(prefix, "", GET, option)
+      >(prefix, PATH0, GET, option)
         .json()
         .then((r) => r.body),
     post: (option: {
@@ -111,7 +90,7 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
         Methods0["post"]["resBody"],
         BasicHeaders,
         Methods0["post"]["status"]
-      >(prefix, "", POST, option, "FormData").json(),
+      >(prefix, PATH0, POST, option, "FormData").json(),
     $post: (option: {
       body: Methods0["post"]["reqBody"];
       config?: T | undefined;
@@ -120,10 +99,10 @@ const api = <T>({ baseURL, fetch }: AspidaClient<T>) => {
         Methods0["post"]["resBody"],
         BasicHeaders,
         Methods0["post"]["status"]
-      >(prefix, "", POST, option, "FormData")
+      >(prefix, PATH0, POST, option, "FormData")
         .json()
         .then((r) => r.body),
-    $path: () => `${prefix}`,
+    $path: () => `${prefix}${PATH0}`,
   };
 };
 

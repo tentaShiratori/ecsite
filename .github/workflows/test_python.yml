@@ -1,0 +1,32 @@
+name: Test Python code
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+    tags:        
+      - v*
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install poetry
+        run: pipx install poetry
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          cache: 'poetry'
+          cache-dependency-path: |
+            back/poetry.lock
+      - name: Install Dependencies 
+        working-directory: back
+        run: |
+          poetry install
+      - name: Test format 
+        working-directory: back
+        run: |
+          poetry run python manage.py test
+

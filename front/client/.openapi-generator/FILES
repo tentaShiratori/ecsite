@@ -2,13 +2,11 @@
 .travis.yml
 README.md
 analysis_options.yaml
-doc/DefaultApi.md
-doc/IdApi.md
 doc/Product.md
+doc/ProductsApi.md
 git_push.sh
 lib/api.dart
-lib/api/default_api.dart
-lib/api/id_api.dart
+lib/api/products_api.dart
 lib/api_client.dart
 lib/api_exception.dart
 lib/api_helper.dart

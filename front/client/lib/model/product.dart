@@ -28,29 +28,32 @@ class Product {
   num price;
 
   @override
-  bool operator ==(Object other) => identical(this, other) || other is Product &&
-     other.name == name &&
-     other.description == description &&
-     other.image == image &&
-     other.price == price;
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Product &&
+          other.name == name &&
+          other.description == description &&
+          other.image == image &&
+          other.price == price;
 
   @override
   int get hashCode =>
-    // ignore: unnecessary_parenthesis
-    (name.hashCode) +
-    (description.hashCode) +
-    (image.hashCode) +
-    (price.hashCode);
+      // ignore: unnecessary_parenthesis
+      (name.hashCode) +
+      (description.hashCode) +
+      (image.hashCode) +
+      (price.hashCode);
 
   @override
-  String toString() => 'Product[name=$name, description=$description, image=$image, price=$price]';
+  String toString() =>
+      'Product[name=$name, description=$description, image=$image, price=$price]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-      json[r'name'] = this.name;
-      json[r'description'] = this.description;
-      json[r'image'] = this.image;
-      json[r'price'] = this.price;
+    json[r'name'] = this.name;
+    json[r'description'] = this.description;
+    json[r'image'] = this.image;
+    json[r'price'] = this.price;
     return json;
   }
 
@@ -66,8 +69,10 @@ class Product {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key), 'Required key "Product[$key]" is missing from JSON.');
-          assert(json[key] != null, 'Required key "Product[$key]" has a null value in JSON.');
+          assert(json.containsKey(key),
+              'Required key "Product[$key]" is missing from JSON.');
+          assert(json[key] != null,
+              'Required key "Product[$key]" has a null value in JSON.');
         });
         return true;
       }());
@@ -82,7 +87,10 @@ class Product {
     return null;
   }
 
-  static List<Product>? listFromJson(dynamic json, {bool growable = false,}) {
+  static List<Product>? listFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final result = <Product>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -110,12 +118,18 @@ class Product {
   }
 
   // maps a json object with a list of Product-objects as value to a dart map
-  static Map<String, List<Product>> mapListFromJson(dynamic json, {bool growable = false,}) {
+  static Map<String, List<Product>> mapListFromJson(
+    dynamic json, {
+    bool growable = false,
+  }) {
     final map = <String, List<Product>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = Product.listFromJson(entry.value, growable: growable,);
+        final value = Product.listFromJson(
+          entry.value,
+          growable: growable,
+        );
         if (value != null) {
           map[entry.key] = value;
         }
@@ -132,4 +146,3 @@ class Product {
     'price',
   };
 }
-
