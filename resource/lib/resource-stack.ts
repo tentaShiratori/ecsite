@@ -4,6 +4,7 @@ import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecs from "aws-cdk-lib/aws-ecs";
 import * as ecr from "aws-cdk-lib/aws-ecr";
 import * as elbv2 from "aws-cdk-lib/aws-elasticloadbalancingv2";
+import { ApplicationProtocol } from "aws-cdk-lib/aws-elasticloadbalancingv2";
 export class ResourceStack extends cdk.Stack {
   constructor(scope: Construct, id: string, props?: cdk.StackProps) {
     super(scope, id, props);
@@ -55,6 +56,7 @@ export class ResourceStack extends cdk.Stack {
     });
 
     listener.addTargets("ECS", {
+      protocol: ApplicationProtocol.HTTP,
       port: 3000,
       targets: [service],
     });
