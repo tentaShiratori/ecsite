@@ -20,6 +20,12 @@ export class ResourceStack extends cdk.Stack {
     const albs = this.createAlB(vpc);
     this.createBackendStack(vpc, albs);
     this.createAdminStack(vpc, albs);
+    new cdk.CfnOutput(this, "LoadBalancerDNS", {
+      value: albs.feAlb.loadBalancerDnsName,
+    });
+    new cdk.CfnOutput(this, "BELoadBalancerDNS", {
+      value: albs.beAlb.loadBalancerDnsName,
+    });
   }
 
   private createAdminStack(
@@ -45,7 +51,7 @@ export class ResourceStack extends cdk.Stack {
       port: 80,
     });
     const targetGroup = new elbv2.ApplicationTargetGroup(this, "TG", {
-      vpc: vpc,
+      vpc,
       port: 3000,
       protocol: elbv2.ApplicationProtocol.HTTP,
       targetType: elbv2.TargetType.IP,
@@ -84,6 +90,7 @@ export class ResourceStack extends cdk.Stack {
       }),
       portMappings: [{ containerPort: 3000 }],
     });
+
     const service = new ecs.FargateService(this, "Service", {
       cluster,
       taskDefinition: fargateTaskDefinition,
@@ -135,7 +142,7 @@ export class ResourceStack extends cdk.Stack {
       port: 80,
     });
     const targetGroup = new elbv2.ApplicationTargetGroup(this, "BETG", {
-      vpc: vpc,
+      vpc,
       port: 8000,
       protocol: elbv2.ApplicationProtocol.HTTP,
       targetType: elbv2.TargetType.IP,

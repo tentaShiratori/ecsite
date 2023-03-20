@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+import requests
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
@@ -130,8 +131,14 @@ STATIC_ROOT = os.path.join(BASE_DIR)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-# fargateのhelthcheckのipと環境変数を返す
-ALLOWED_HOSTS = ["10.0.0.252"] + env("ALLOWED_HOSTS").split()
+# fargateのhelthcheckのipと環境変数から設定する
+ALLOWED_HOSTS = env("ALLOWED_HOSTS").split()
+resp = requests.get("http://169.254.170.2/v2/metadata")
+data = resp.json()
+container_meta = data["Containers"][0]
+EC2_PRIVATE_IP = container_meta["Networks"][0]["IPv4Addresses"][0]
+ALLOWED_HOSTS.append(EC2_PRIVATE_IP)
+
 
 MEDIA_URL = "/images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")
