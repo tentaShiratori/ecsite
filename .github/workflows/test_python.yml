@@ -27,6 +27,8 @@ jobs:
           poetry install
       - name: Test format 
         working-directory: back
+        env:
+          APP_ENV: development
         run: |
           poetry run python manage.py test
 
