@@ -48,6 +48,7 @@
     "@aws-cdk/aws-secretsmanager:useAttachedSecretResourcePolicyForSecretTargetAttachments": true,
     "@aws-cdk/aws-redshift:columnId": true,
     "systemName": "ecsite",
-    "envType": "stg"
+    "envType": "stg",
+    "tag": "test"
   }
 }
