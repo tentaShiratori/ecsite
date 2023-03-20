@@ -15,7 +15,7 @@ axiosInstance.interceptors.request.use((config) => {
 
 export const defaultApi = api(
   aspida(axiosInstance, {
-    baseURL: "http://localhost:8000",
+    baseURL: process.env.NEXT_PUBLIC_BACKEND_URL,
     paramsSerializer: {
       encode: parse as any,
       serialize: stringify as any,

@@ -12,10 +12,11 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 import os
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-
+env = environ.Env()
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
@@ -129,7 +130,8 @@ STATIC_ROOT = os.path.join(BASE_DIR)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-ALLOWED_HOSTS = ["10.0.2.2", "localhost", "127.0.0.1"]
+# fargateのhelthcheckのipと環境変数を返す
+ALLOWED_HOSTS = ["10.0.0.252"] + env("ALLOWED_HOSTS").split()
 
 MEDIA_URL = "/images/"
 MEDIA_ROOT = os.path.join(BASE_DIR, "media")

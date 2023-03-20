@@ -12,7 +12,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-
+      - name: Set Env
+        run: |
+          touch admin/.env.production 
+          echo ${{vars.ADMIN_ENV}} > admin/.env.production 
       - uses: actions/setup-node@v3
         with:
           node-version: 19
@@ -51,3 +54,4 @@ jobs:
           AWS_DEFAULT_REGION: 'ap-northeast-1'
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          BACKEND_URL: http://Resou-BEALB-1D74IOSBSPHTE-435767567.ap-northeast-1.elb.amazonaws.com

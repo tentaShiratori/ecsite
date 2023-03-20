@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
 import { Inter } from "next/font/google";
 import styles from "@/styles/Home.module.css";
 import Link from "next/link";
@@ -18,6 +17,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Link href={pagesPath.products.new.$url()}>商品を作成する</Link>
+        {process.env.NEXT_PUBLIC_BACKEND_URL}
       </main>
     </>
   );
