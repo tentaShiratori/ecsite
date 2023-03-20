@@ -8,5 +8,4 @@ COPY ./poetry.lock /code
 ENV PATH="$PATH:$POETRY_HOME/bin"
 RUN poetry install --only main
 COPY . /code
-RUN poetry run python manage.py collectstatic --no-input
 CMD ["poetry","run","gunicorn", "--bind", "0.0.0.0:8000", "ecsite.wsgi"]
