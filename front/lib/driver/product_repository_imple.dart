@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:openapi/api.dart' as openapi;
 
 class ProductRepositoryImple extends GetxService implements ProductRepository {
-  final openapi.DefaultApi api;
+  final openapi.ProductsApi api;
 
   ProductRepositoryImple({required this.api});
 

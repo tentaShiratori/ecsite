@@ -13,11 +13,15 @@ part of openapi.api;
 class Product {
   /// Returns a new [Product] instance.
   Product({
+    required this.pk,
     required this.name,
     required this.description,
     required this.image,
     required this.price,
+    required this.user,
   });
+
+  int pk;
 
   String name;
 
@@ -27,33 +31,38 @@ class Product {
 
   num price;
 
+  int user;
+
   @override
-  bool operator ==(Object other) =>
-      identical(this, other) ||
-      other is Product &&
-          other.name == name &&
-          other.description == description &&
-          other.image == image &&
-          other.price == price;
+  bool operator ==(Object other) => identical(this, other) || other is Product &&
+     other.pk == pk &&
+     other.name == name &&
+     other.description == description &&
+     other.image == image &&
+     other.price == price &&
+     other.user == user;
 
   @override
   int get hashCode =>
-      // ignore: unnecessary_parenthesis
-      (name.hashCode) +
-      (description.hashCode) +
-      (image.hashCode) +
-      (price.hashCode);
+    // ignore: unnecessary_parenthesis
+    (pk.hashCode) +
+    (name.hashCode) +
+    (description.hashCode) +
+    (image.hashCode) +
+    (price.hashCode) +
+    (user.hashCode);
 
   @override
-  String toString() =>
-      'Product[name=$name, description=$description, image=$image, price=$price]';
+  String toString() => 'Product[pk=$pk, name=$name, description=$description, image=$image, price=$price, user=$user]';
 
   Map<String, dynamic> toJson() {
     final json = <String, dynamic>{};
-    json[r'name'] = this.name;
-    json[r'description'] = this.description;
-    json[r'image'] = this.image;
-    json[r'price'] = this.price;
+      json[r'pk'] = this.pk;
+      json[r'name'] = this.name;
+      json[r'description'] = this.description;
+      json[r'image'] = this.image;
+      json[r'price'] = this.price;
+      json[r'user'] = this.user;
     return json;
   }
 
@@ -69,28 +78,25 @@ class Product {
       // Note 2: this code is stripped in release mode!
       assert(() {
         requiredKeys.forEach((key) {
-          assert(json.containsKey(key),
-              'Required key "Product[$key]" is missing from JSON.');
-          assert(json[key] != null,
-              'Required key "Product[$key]" has a null value in JSON.');
+          assert(json.containsKey(key), 'Required key "Product[$key]" is missing from JSON.');
+          assert(json[key] != null, 'Required key "Product[$key]" has a null value in JSON.');
         });
         return true;
       }());
 
       return Product(
+        pk: mapValueOfType<int>(json, r'pk')!,
         name: mapValueOfType<String>(json, r'name')!,
         description: mapValueOfType<String>(json, r'description')!,
         image: mapValueOfType<String>(json, r'image')!,
         price: num.parse(json[r'price'].toString()),
+        user: mapValueOfType<int>(json, r'user')!,
       );
     }
     return null;
   }
 
-  static List<Product>? listFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static List<Product>? listFromJson(dynamic json, {bool growable = false,}) {
     final result = <Product>[];
     if (json is List && json.isNotEmpty) {
       for (final row in json) {
@@ -118,18 +124,12 @@ class Product {
   }
 
   // maps a json object with a list of Product-objects as value to a dart map
-  static Map<String, List<Product>> mapListFromJson(
-    dynamic json, {
-    bool growable = false,
-  }) {
+  static Map<String, List<Product>> mapListFromJson(dynamic json, {bool growable = false,}) {
     final map = <String, List<Product>>{};
     if (json is Map && json.isNotEmpty) {
       json = json.cast<String, dynamic>(); // ignore: parameter_assignments
       for (final entry in json.entries) {
-        final value = Product.listFromJson(
-          entry.value,
-          growable: growable,
-        );
+        final value = Product.listFromJson(entry.value, growable: growable,);
         if (value != null) {
           map[entry.key] = value;
         }
@@ -140,9 +140,12 @@ class Product {
 
   /// The list of required keys that must be present in a JSON.
   static const requiredKeys = <String>{
+    'pk',
     'name',
     'description',
     'image',
     'price',
+    'user',
   };
 }
+

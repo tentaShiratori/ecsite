@@ -1,0 +1,43 @@
+version: "3"
+services:
+  back:
+    build: ./back
+    command: poetry run python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - ./back:/code
+    ports:
+      - "8000:8000"
+    environment:
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+  admin:
+    build: ./admin
+    command: yarn dev
+    volumes:
+      - ./admin:/app
+    ports:
+      - "3000:3000"
+    environment:
+      - WATCHPACK_POLLING=true
+  localstack:
+    image: localstack/localstack:latest
+    ports:
+      - 4566:4566
+    environment:
+      - SERVICES=dynamodb,s3
+      - AWS_ACCESS_KEY_ID=test
+      - AWS_SECRET_ACCESS_KEY=test
+    volumes:
+      - ./.localstack:/var/lib/localstack
+  db:
+    image: mysql:8
+    container_name: mysql_host
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecsite-develop
+      MYSQL_USER: develop
+      MYSQL_PASSWORD: develop
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    ports:
+      - 3306:3306

@@ -1,5 +1,6 @@
 # Use an official Node.js runtime as a parent image
 FROM node:16-alpine
+ARG NODE_ENV
 ARG NEXT_PUBLIC_BACKEND_URL
 # Set the working directory to /app
 WORKDIR /app
@@ -22,8 +23,9 @@ RUN yarn build
 EXPOSE 3000
 
 # Set the NODE_ENV environment variable to production
-ENV NODE_ENV production
-ENV NEXT_PUBLIC_BACKEND_URL $NEXT_PUBLIC_BACKEND_URL
+RUN touch .env.production
+RUN echo "NODE_ENV=$NODE_ENV" >> .env.production
+RUN echo "NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL" >> .env.production
 
 # Start the application
 CMD ["yarn", "start"]

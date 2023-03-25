@@ -1,5 +1,41 @@
 @startuml
-object ユーザー
-object 管理者
+object ユーザー{
+    firstname
+    lastname
+    email
+    password
+}
+object 住所{
+    name 
+    zipcode
+    address1
+    address2
+}
+object 管理者{
+    email
+    password
+}
 object 商品
+object 卸業者{
+    email
+    password
+}
+object カート
+object 帳票{docs/model.puml
+    count
+    price
+}
+object 注文{
+    count
+    address
+    price
+}
+ユーザー o-- 住所
+ユーザー -- カート
+カート o-- 帳票
+帳票 -- 商品
+バイヤー o-- 商品
+バイヤー o-- 注文
+ユーザー o-- 注文
+注文 -- 商品
 @enduml

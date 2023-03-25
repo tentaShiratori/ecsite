@@ -7,7 +7,8 @@ import 'domain/product_repository.dart';
 class InitialBindings implements Bindings {
   @override
   void dependencies() {
-    Get.lazyPut(() => DefaultApi(ApiClient(basePath: "http://10.0.2.2:8000")));
+    Get.lazyPut(() => ApiClient(basePath: "http://10.0.2.2:8000"));
+    Get.lazyPut(() => ProductsApi(Get.find<ApiClient>()));
     Get.lazyPut<ProductRepository>(
         () => ProductRepositoryImple(api: Get.find()));
   }

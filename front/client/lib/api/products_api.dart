@@ -12,7 +12,7 @@ part of openapi.api;
 
 
 class ProductsApi {
-  ProductsApi([ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
+  ProductsApi([ ApiClient? apiClient]) : apiClient = apiClient ?? defaultApiClient;
 
   final ApiClient apiClient;
 

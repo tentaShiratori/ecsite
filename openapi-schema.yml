@@ -1,6 +1,7 @@
 openapi: 3.0.2
 info:
-  title: "Amazon\u307F\u305F\u3044\u306AEC\u30B5\u30A4\u30C8"
+  title: "Amazon\u0103\x81\u017C\u0103\x81\u017A\u0103\x81\u201E\u0103\x81\u015EEC\u0103\
+    \u201A\xB5\u0103\u201A\xA4\u0103\x83\x88"
   version: ''
 paths:
   /products/:
@@ -113,6 +114,9 @@ components:
     Product:
       type: object
       properties:
+        pk:
+          type: integer
+          readOnly: true
         name:
           type: string
           maxLength: 200
@@ -120,11 +124,15 @@ components:
           type: string
         image:
           type: string
-          readOnly: true
         price:
           type: number
+        user:
+          type: integer
       required:
       - name
       - description
-      - price
       - image
+      - price
+      - user
+      - image
+      - pk

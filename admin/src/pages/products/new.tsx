@@ -5,12 +5,12 @@ import { defaultApi } from "@/lib/api";
 import {
   Input,
   Modal,
-  ModalContent,
   ModalOverlay,
   Spinner,
   useToast,
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
+import useAspidaSWR from "@aspida/swr";
 const schema = z.object({
   name: z.string(),
   description: z.string(),
@@ -21,6 +21,7 @@ const schema = z.object({
 type Inputs = z.infer<typeof schema>;
 
 export default function New() {
+  const { data } = useAspidaSWR(defaultApi.products);
   const {
     register,
     handleSubmit,
@@ -66,6 +67,10 @@ export default function New() {
         {errors.image?.message}
       </div>
       <input type="submit" disabled={isSubmitting} value="送信" />
+      {data &&
+        data.map((p) => {
+          return <img key={p.name} src={p.image} alt="aaa" />;
+        })}
       <Modal isOpen={isSubmitting} onClose={() => {}}>
         <ModalOverlay />
         <Spinner

@@ -17,8 +17,7 @@ class Home extends HookWidget {
       appBar: AppBar(
         title: Text(title),
       ),
-      body: Center(
-        child: Column(
+      body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
@@ -40,6 +39,7 @@ class Home extends HookWidget {
                       shrinkWrap: true,
                       itemCount: data.length,
                       itemBuilder: (context, index) {
+                        print(data[index].image);
                         return Column(children: [
                           Image(
                             image: NetworkImage(data[index].image),
@@ -53,7 +53,6 @@ class Home extends HookWidget {
                 })
           ],
         ),
-      ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           counter.value++;
