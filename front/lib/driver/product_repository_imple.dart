@@ -14,6 +14,7 @@ class ProductRepositoryImple extends GetxService implements ProductRepository {
     if (products == null) return [];
     return products
         .map((e) => Product(
+            pk:0,
             image: e.image,
             name: e.name,
             price: e.price.toDouble(),

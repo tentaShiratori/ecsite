@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'initial_bindings.dart';
-import 'pages/home.dart';
+import 'pages/app.dart';
+import 'route_helper.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,6 +11,7 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -17,7 +19,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),
-        home: const Home(title: 'Flutter Demo Home Page'),
+        initialRoute: RouteHelper.initial,
+        getPages: RouteHelper.routes,
+        defaultTransition: Transition.rightToLeft,
         initialBinding: InitialBindings());
   }
 }
