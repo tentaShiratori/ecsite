@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:front/pages/home/home_controller.dart';
+import 'package:front/pages/home/product_list/widgets/body.dart';
 import 'package:get/get.dart';
 
 class ProductList extends HookWidget {
@@ -10,16 +11,6 @@ class ProductList extends HookWidget {
   Widget build(BuildContext context) {
     var controller = Get.find<HomeController>();
     return Scaffold(
-        body: Column(
-      children: [
-        Text("product list"),
-        GestureDetector(
-          onTap: () {
-            controller.toNext("/history");
-          },
-          child: Text("Push"),
-        )
-      ],
-    ));
+        body: Body());
   }
 }

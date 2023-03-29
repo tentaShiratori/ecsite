@@ -21,4 +21,10 @@ class ProductRepositoryImple extends GetxService implements ProductRepository {
             description: e.description))
         .toList();
   }
+
+  @override
+  Future<Product> get() {
+    // TODO: implement get
+    throw UnimplementedError();
+  }
 }

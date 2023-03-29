@@ -3,13 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get/get.dart';
 
 class MyBottomNavigationBar extends HookWidget {
+  final int currentIndex;
   final void Function(int value) onTap;
 
-  const MyBottomNavigationBar({Key? key,required this.onTap}) : super(key: key);
+  const MyBottomNavigationBar({Key? key,required this.currentIndex,required this.onTap}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var index = useState(0);
     return Container(
         height: 60,
         decoration: BoxDecoration(
@@ -18,7 +18,7 @@ class MyBottomNavigationBar extends HookWidget {
         child: Stack(
           children: [
             Positioned(
-              left: Get.width / 8 - 30 + Get.width / 4 * index.value,
+              left: Get.width / 8 - 30 + Get.width / 4 * currentIndex,
               child: Container(
                 width: 60,
                 height: 6,
@@ -42,7 +42,6 @@ class MyBottomNavigationBar extends HookWidget {
                   child: GestureDetector(
                     behavior: HitTestBehavior.translucent,
                     onTap: () {
-                      index.value = i;
                       onTap(i);
                     },
                     child: Stack(
