@@ -18,8 +18,9 @@ django-extensions = "^3.2.1"
 django-environ = "^0.10.0"
 requests = "^2.28.2"
 boto3 = "^1.26.98"
-boto3-stubs = {extras = ["dynamodb", "s3"], version = "^1.26.98"}
 mysqlclient = "^2.1.1"
+boto3-stubs-lite = {extras = ["cognito-idp", "dynamodb", "s3"], version = "^1.26.102"}
+injector = "^0.20.1"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -29,3 +30,6 @@ pyright = "^1.1.299"
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pyright]
+useLibraryCodeForTypes = true

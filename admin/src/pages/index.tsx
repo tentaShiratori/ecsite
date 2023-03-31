@@ -17,6 +17,7 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         <Link href={pagesPath.products.new.$url()}>商品を作成する</Link>
+        <Link href={pagesPath.auth.sign_up.$url()}>サインアップ</Link>
         {process.env.NEXT_PUBLIC_BACKEND_URL}
       </main>
     </>

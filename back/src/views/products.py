@@ -1,14 +1,15 @@
+from src.di import injector
 from rest_framework import routers, serializers, viewsets
 from rest_framework.schemas.openapi import AutoSchema
+from src.drivers.aws.file_uploader import FileUploader
 from ..models import Product, User
-from django.http import Http404
+from django.http import Http404, HttpRequest
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 from rest_framework import status
 import logging
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from src.lib.aws import MyS3Client
 from django.http import QueryDict
 from typing import cast
 
@@ -20,8 +21,8 @@ class CustomSchema(AutoSchema):
         return ProductSerializer()
 
     def map_field(self, field):
-        if isinstance(field, serializers.ImageField): 
-            return {"type":"string"}
+        if isinstance(field, serializers.ImageField):
+            return {"type": "string"}
         return super().map_field(field)
 
     def map_serializer(self, serializer):
@@ -40,14 +41,14 @@ class ProductSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance: Product):
         res = super().to_representation(instance)
-        s3Client = MyS3Client()
-        res["image"] = s3Client.s3_host + instance.image
+        file_uploader = injector.get(FileUploader)
+        res["image"] = file_uploader.host + instance.image
         return res
 
     def create(self, validated_data):
         image: InMemoryUploadedFile = validated_data["image"]
-        s3Client = MyS3Client()
-        s3Client.upload_fileobj(image, image.name)
+        file_uploader = injector.get(FileUploader)
+        file_uploader.run(image, image.name)
         validated_data["image"] = image.name
         return super().create(validated_data=validated_data)
 
@@ -55,7 +56,9 @@ class ProductSerializer(serializers.ModelSerializer):
 class ProductList(APIView):
     schema = CustomSchema()
 
-    def get(self, request, format=None):
+    def get(self, request: HttpRequest, format=None):
+        print(request.claims)
+        print(request.user)
         products = Product.objects.all()
 
         serializer = ProductSerializer(products, many=True)

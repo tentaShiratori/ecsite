@@ -10,15 +10,6 @@ services:
     environment:
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
-  admin:
-    build: ./admin
-    command: yarn dev
-    volumes:
-      - ./admin:/app
-    ports:
-      - "3000:3000"
-    environment:
-      - WATCHPACK_POLLING=true
   localstack:
     image: localstack/localstack:latest
     ports:
@@ -27,6 +18,7 @@ services:
       - SERVICES=dynamodb,s3
       - AWS_ACCESS_KEY_ID=test
       - AWS_SECRET_ACCESS_KEY=test
+      - DATA_DIR=/var/lib/localstack/data
     volumes:
       - ./.localstack:/var/lib/localstack
   db:
@@ -34,7 +26,6 @@ services:
     container_name: mysql_host
     environment:
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: ecsite-develop
       MYSQL_USER: develop
       MYSQL_PASSWORD: develop
       TZ: "Asia/Tokyo"
