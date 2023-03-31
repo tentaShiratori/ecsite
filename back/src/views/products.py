@@ -1,7 +1,8 @@
+from src.decorators.permission_required import login_required
 from src.di import injector
-from rest_framework import routers, serializers, viewsets
+from rest_framework import serializers
 from rest_framework.schemas.openapi import AutoSchema
-from src.drivers.aws.file_uploader import FileUploader
+from src.drivers.file_uploader import FileUploader
 from ..models import Product, User
 from django.http import Http404, HttpRequest
 from rest_framework.views import APIView
@@ -57,15 +58,14 @@ class ProductList(APIView):
     schema = CustomSchema()
 
     def get(self, request: HttpRequest, format=None):
-        print(request.claims)
-        print(request.user)
         products = Product.objects.all()
 
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
+    @login_required
     def post(self, request: Request, format=None):
-        user = User.objects.first()
+        user: User = User.objects.first()
         if user == None:
             Response(status=status.HTTP_404_NOT_FOUND)
         data = cast(QueryDict, request.data)
@@ -83,7 +83,7 @@ class ProductDetail(APIView):
     def get_object(self, pk):
         try:
             return Product.objects.get(pk=pk)
-        except Product.DoesNotExist:
+        except Product.DoesNotExist:  # type: ignore
             raise Http404
 
     def get(self, request: Request, pk: int):

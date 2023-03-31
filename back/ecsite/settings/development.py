@@ -6,7 +6,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ["10.0.2.2", "localhost", "127.0.0.1"]
 
-S3_ENDPOINT = "http://localstack:4566"
+S3_ENDPOINT = "http://localstack:4566/"
+S3_HOST_ENDPOINT = "http://localhost:4566/"
 
 LOGGING = {
     "version": 1,

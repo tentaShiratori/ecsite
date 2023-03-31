@@ -10,36 +10,36 @@ from dataclasses import dataclass
 from typing import NewType, List, Optional
 
 UserSub = NewType("UserSub", str)
-UserName = NewType("UserName", str)
+UserEmail = NewType("UserEmail", str)
 
 
 @dataclass
 class UserClaims:
     sub: UserSub
-    username: UserName
+    email: UserEmail
 
     @staticmethod
     def from_response(response: GetUserResponseTypeDef) -> "UserClaims":
-        sub = _get_sub(response["UserAttributes"])
-        if sub == None:
+        email = _get_email(response["UserAttributes"])
+        if email is None:
             raise
         return UserClaims(
-            UserSub(sub),
-            UserName(response["Username"]),
+            UserSub(response["Username"]),
+            UserEmail(email),
         )
 
 
-def _get_sub(attrs: List[AttributeTypeTypeDef]):
+def _get_email(attrs: List[AttributeTypeTypeDef]):
     sub: Optional[str] = None
     for attr in attrs:
-        if attr["Name"] == "sub":
+        if attr["Name"] == "email":
             sub = attr.get("Value")
     return sub
 
 
 @inject
 @dataclass
-class UserClaimResolver:
+class UserClaimsResolver:
     client: CognitoIdentityProviderClient
 
     def run(self, token: str) -> Optional[UserClaims]:
