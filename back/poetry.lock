@@ -677,6 +677,21 @@ files = [
 Django = ">=3.2"
 
 [[package]]
+name = "django-polymorphic"
+version = "3.1.0"
+description = "Seamless polymorphic inheritance for Django models"
+category = "main"
+optional = false
+python-versions = "*"
+files = [
+    {file = "django-polymorphic-3.1.0.tar.gz", hash = "sha256:d6955b5308bf6e41dcb22ba7c96f00b51dfa497a8a5ab1e9c06c7951bf417bf8"},
+    {file = "django_polymorphic-3.1.0-py3-none-any.whl", hash = "sha256:08bc4f4f4a773a19b2deced5a56deddd1ef56ebd15207bf4052e2901c25ef57e"},
+]
+
+[package.dependencies]
+Django = ">=2.1"
+
+[[package]]
 name = "djangorestframework"
 version = "3.14.0"
 description = "Web APIs for Django, made easy."
@@ -1226,4 +1241,4 @@ socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "0a8bb632fcd0f7e3940808eabe9b0fe1c73c019fc3a258ea08cac5397a7fdc06"
+content-hash = "51150b3477963db6268329dcf9feea97923704cd5f56efe7601948b8e9f4943f"

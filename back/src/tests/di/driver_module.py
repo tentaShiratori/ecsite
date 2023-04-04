@@ -1,8 +1,8 @@
 from injector import Module, provider
-from src.drivers.aws.file_uploader import FileUploader
 from mypy_boto3_s3 import S3Client
 from typing import IO, Any
 from dataclasses import dataclass
+from src.drivers.file_uploader import FileUploader
 
 
 @dataclass

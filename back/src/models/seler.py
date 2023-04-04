@@ -1,7 +1,6 @@
 from django.db import models
+from .user import User
 
 
-class Seler(models.Model):
+class Seler(User):
     name = models.CharField(blank=False, max_length=200)
-    email = models.CharField(blank=False, max_length=200)
-    password = models.CharField(blank=False, max_length=200)

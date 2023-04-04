@@ -10,11 +10,6 @@
       "StackName": "amplify-ecsite-dev-190703",
       "StackId": "arn:aws:cloudformation:ap-northeast-1:732792174901:stack/amplify-ecsite-dev-190703/74c7aa60-ce19-11ed-9702-06206eff2e6f",
       "AmplifyAppId": "d2b4lrmstammvx"
-    },
-    "categories": {
-      "auth": {
-        "ecsited9466d00": {}
-      }
     }
   }
 }

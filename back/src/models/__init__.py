@@ -6,5 +6,16 @@ from .order import Order
 from .report import Report
 from .seler import Seler
 from .user import User
+from .client import Client
 
-__all__ = ["Product", "Address", "Admin", "Cart", "Order", "Report", "Seler", "User"]
+__all__ = [
+    "Product",
+    "Address",
+    "Admin",
+    "Cart",
+    "Order",
+    "Report",
+    "Seler",
+    "User",
+    "Client",
+]

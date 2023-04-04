@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 import environ
+from rest_framework import request
 
 env = environ.Env()
 env.read_env(".env")
@@ -26,14 +27,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 INSTALLED_APPS = [
     "django_extensions",
     "src.apps.EcsiteConfig",
-    "django.contrib.admin",
-    "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
     "corsheaders",
+    "polymorphic",
 ]
 
 MIDDLEWARE = [
@@ -42,7 +42,6 @@ MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
-    "src.middlewares.cognito_auth_middleware.CognitoAuthMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
@@ -78,7 +77,7 @@ DATABASES = {
         "USER": env("DB_USER"),  # パソコンにインストールしたMySQLのユーザー名
         "PASSWORD": env("DB_PASSWORD"),  # 同上。そのパスワード
         "HOST": env("DB_HOST"),  # 同上。そのパスワード
-    }
+    },
 }
 
 
@@ -133,4 +132,8 @@ CORS_ALLOW_ALL_ORIGINS = True
 
 REST_FRAMEWORK = {
     "DEFAULT_RENDERER_CLASSES": ("rest_framework.renderers.JSONRenderer",),
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "src.auth.authenticator.cognito_authenticator.CognitoAuthenticator"
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [],
 }

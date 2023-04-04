@@ -1,9 +1,7 @@
 from django.db import models
+from polymorphic.models import PolymorphicModel
 
 
-class User(models.Model):
-    firstname = models.CharField(blank=False, max_length=200)
-    lastname = models.CharField(blank=False, max_length=200)
-    email = models.CharField(blank=False, max_length=200)
-    password = models.CharField(blank=False, max_length=200)
-    image = models.CharField(blank=False, max_length=200)
+class User(PolymorphicModel):
+    sub = models.CharField(blank=False, max_length=36, unique=True)
+    email = models.CharField(blank=False, max_length=255, unique=True)

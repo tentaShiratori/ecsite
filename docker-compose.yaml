@@ -23,9 +23,9 @@ services:
       - ./.localstack:/var/lib/localstack
   db:
     image: mysql:8
-    container_name: mysql_host
     environment:
       MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ecsite-develop
       MYSQL_USER: develop
       MYSQL_PASSWORD: develop
       TZ: "Asia/Tokyo"

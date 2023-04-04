@@ -1,4 +1,4 @@
-from src.decorators.permission_required import login_required
+from src.auth.decorators.permission_required import login_required, permission_required
 from src.di import injector
 from rest_framework import serializers
 from rest_framework.schemas.openapi import AutoSchema
@@ -13,6 +13,7 @@ import logging
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.http import QueryDict
 from typing import cast
+from src.models import Seler, Admin
 
 logger = logging.getLogger(__name__)
 
@@ -63,7 +64,7 @@ class ProductList(APIView):
         serializer = ProductSerializer(products, many=True)
         return Response(serializer.data)
 
-    @login_required
+    @permission_required([Admin, Seler])
     def post(self, request: Request, format=None):
         user: User = User.objects.first()
         if user == None:
@@ -91,6 +92,7 @@ class ProductDetail(APIView):
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
+    @permission_required([Admin, Seler])
     def put(self, request, pk, format=None):
         product = self.get_object(pk)
         serializer = ProductSerializer(product, data=request.data)
@@ -99,6 +101,7 @@ class ProductDetail(APIView):
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    @permission_required([Admin, Seler])
     def delete(self, request, pk, format=None):
         product = self.get_object(pk)
         product.delete()
