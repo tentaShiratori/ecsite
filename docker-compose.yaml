@@ -32,3 +32,9 @@ services:
     command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
     ports:
       - 3306:3306
+  redis:
+    image: redis:7.0.10
+    ports:
+      - "6379:6379"
+    volumes:
+      - "./.redis:/data"

@@ -11,6 +11,8 @@ import {
 } from "@chakra-ui/react";
 import { css } from "@emotion/react";
 import useAspidaSWR from "@aspida/swr";
+import axios from "axios";
+import { useEffect } from "react";
 const schema = z.object({
   name: z.string(),
   description: z.string(),
@@ -40,6 +42,15 @@ export default function New() {
       });
     }
   };
+  useEffect(() => {
+    axios
+      .get("http://localhost:8000/cart/", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log(res.data);
+      });
+  }, []);
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div>
