@@ -26,7 +26,7 @@ class CognitoAuthenticator(BaseAuthentication):
         if claims is None:
             return (None, None)
         try:
-            user = User.objects.get(email=claims.email)
+            user = User.objects.get(sub=claims.sub)
             return (user, claims)
         except User.DoesNotExist:  # type: ignore
             return (None, claims)

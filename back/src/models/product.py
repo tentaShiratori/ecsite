@@ -3,6 +3,7 @@ from .user import User
 
 
 class Product(models.Model):
+    id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(blank=False, max_length=200)
     description = models.TextField(blank=False)

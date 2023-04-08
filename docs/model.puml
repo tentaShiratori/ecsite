@@ -21,7 +21,7 @@ object 卸業者{
     password
 }
 object カート
-object 帳票{docs/model.puml
+object 帳票{
     count
     price
 }

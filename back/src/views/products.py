@@ -19,33 +19,30 @@ logger = logging.getLogger(__name__)
 
 
 class CustomSchema(AutoSchema):
-    def get_serializer(self, path, method):
-        return ProductSerializer()
+    def get_request_serializer(self, path, method):
+        return ProductRequestSerializer()
 
-    def map_field(self, field):
-        if isinstance(field, serializers.ImageField):
-            return {"type": "string"}
-        return super().map_field(field)
+    def get_response_serializer(self, path, method):
+        return ProductResponseSerializser()
 
-    def map_serializer(self, serializer):
-        result = super().map_serializer(serializer)
-        result["required"].append("image")
-        result["required"].append("pk")
-        return result
+    # def map_field(self, field):
+    #     if isinstance(field, serializers.ImageField):
+    #         return {"type": "string"}
+    #     return super().map_field(field)
+
+    # def map_serializer(self, serializer):
+    #     result = super().map_serializer(serializer)
+    #     result["required"].append("image")
+    #     result["required"].append("pk")
+    #     return result
 
 
-class ProductSerializer(serializers.ModelSerializer):
+class ProductRequestSerializer(serializers.ModelSerializer):
     image = serializers.ImageField()
 
     class Meta:
         model = Product
-        fields = ["pk", "name", "description", "image", "price", "user"]
-
-    def to_representation(self, instance: Product):
-        res = super().to_representation(instance)
-        file_uploader = injector.get(FileUploader)
-        res["image"] = file_uploader.host + instance.image
-        return res
+        fields = ["id", "name", "description", "image", "price", "user"]
 
     def create(self, validated_data):
         image: InMemoryUploadedFile = validated_data["image"]
@@ -55,23 +52,33 @@ class ProductSerializer(serializers.ModelSerializer):
         return super().create(validated_data=validated_data)
 
 
+class ProductResponseSerializser(ProductRequestSerializer):
+    image = serializers.CharField()
+
+    def to_representation(self, instance: Product):
+        res = super().to_representation(instance)
+        file_uploader = injector.get(FileUploader)
+        res["image"] = file_uploader.host + instance.image
+        return res
+
+
 class ProductList(APIView):
     schema = CustomSchema()
 
     def get(self, request: HttpRequest, format=None):
         products = Product.objects.all()
 
-        serializer = ProductSerializer(products, many=True)
+        serializer = ProductRequestSerializer(products, many=True)
         return Response(serializer.data)
 
-    @permission_required([Admin, Seler])
+    @permission_required((Admin, Seler))
     def post(self, request: Request, format=None):
         user: User = User.objects.first()
         if user == None:
             Response(status=status.HTTP_404_NOT_FOUND)
         data = cast(QueryDict, request.data)
         data.appendlist("user", user.pk)
-        serializer = ProductSerializer(data=data)
+        serializer = ProductRequestSerializer(data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -89,19 +96,19 @@ class ProductDetail(APIView):
 
     def get(self, request: Request, pk: int):
         product = self.get_object(pk)
-        serializer = ProductSerializer(product)
+        serializer = ProductRequestSerializer(product)
         return Response(serializer.data)
 
-    @permission_required([Admin, Seler])
+    @permission_required((Admin, Seler))
     def put(self, request, pk, format=None):
         product = self.get_object(pk)
-        serializer = ProductSerializer(product, data=request.data)
+        serializer = ProductRequestSerializer(product, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    @permission_required([Admin, Seler])
+    @permission_required((Admin, Seler))
     def delete(self, request, pk, format=None):
         product = self.get_object(pk)
         product.delete()

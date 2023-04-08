@@ -1,9 +1,65 @@
 openapi: 3.0.2
 info:
-  title: "Amazon\u0103\x81\u017C\u0103\x81\u017A\u0103\x81\u201E\u0103\x81\u015EEC\u0103\
-    \u201A\xB5\u0103\u201A\xA4\u0103\x83\x88"
+  title: "Amazon\u7E3A\uFF7F\u7E3A\u6E98\uFF1E\u7E3A\uFF6AEC\u7E67\uFF75\u7E67\uFF64\
+    \u7E5D\u30FB"
   version: ''
 paths:
+  /carts/:
+    get:
+      operationId: listCarts
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Cart'
+          description: ''
+      tags:
+      - carts
+  /carts/reports/:
+    get:
+      operationId: listReports
+      description: ''
+      parameters: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Report'
+          description: ''
+      tags:
+      - carts
+    put:
+      operationId: updateReport
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Report'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Report'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Report'
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Report'
+          description: ''
+      tags:
+      - carts
   /products/:
     get:
       operationId: listProducts
@@ -16,37 +72,37 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Product'
+                  $ref: '#/components/schemas/ProductResponseSerializser'
           description: ''
       tags:
       - products
     post:
-      operationId: createProduct
+      operationId: createProductList
       description: ''
       parameters: []
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductRequest'
       responses:
         '201':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductResponseSerializser'
           description: ''
       tags:
       - products
   /products/{id}/:
     get:
-      operationId: retrieveProduct
+      operationId: retrieveProductDetail
       description: ''
       parameters:
       - name: id
@@ -60,12 +116,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductResponseSerializser'
           description: ''
       tags:
       - products
     put:
-      operationId: updateProduct
+      operationId: updateProductDetail
       description: ''
       parameters:
       - name: id
@@ -78,24 +134,24 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductRequest'
           multipart/form-data:
             schema:
-              $ref: '#/components/schemas/Product'
+              $ref: '#/components/schemas/ProductRequest'
       responses:
         '200':
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Product'
+                $ref: '#/components/schemas/ProductResponseSerializser'
           description: ''
       tags:
       - products
     delete:
-      operationId: destroyProduct
+      operationId: destroyProductDetail
       description: ''
       parameters:
       - name: id
@@ -109,12 +165,115 @@ paths:
           description: ''
       tags:
       - products
+  /register/client/:
+    post:
+      operationId: createRegisterClient
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - register
+  /register/admin/:
+    post:
+      operationId: createRegisterAdmin
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - register
+  /register/seler/:
+    post:
+      operationId: createRegisterSeler
+      description: ''
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema: {}
+          application/x-www-form-urlencoded:
+            schema: {}
+          multipart/form-data:
+            schema: {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema: {}
+          description: ''
+      tags:
+      - register
 components:
   schemas:
-    Product:
+    Cart:
       type: object
       properties:
         pk:
+          type: integer
+          readOnly: true
+        user:
+          type: string
+      required:
+      - user
+    Report:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+    ProductRequest:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        image:
+          type: string
+          format: binary
+        price:
+          type: number
+        user:
+          type: string
+      required:
+      - name
+      - description
+      - image
+      - price
+      - user
+    ProductResponseSerializser:
+      type: object
+      properties:
+        id:
           type: integer
           readOnly: true
         name:
@@ -127,12 +286,10 @@ components:
         price:
           type: number
         user:
-          type: integer
+          type: string
       required:
       - name
       - description
       - image
       - price
       - user
-      - image
-      - pk

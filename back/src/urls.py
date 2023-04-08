@@ -2,9 +2,10 @@ from django.urls import include, path
 from .views import products
 from .views import register
 from .views import carts
+from .views.carts import urls as cart_urls
 
 urlpatterns = [
-    path("cart/", carts.CartList.as_view()),
+    path("carts/", include(cart_urls)),
     path("register/client/", register.RegisterClientView.as_view()),
     path("register/admin/", register.RegisterAdminView.as_view()),
     path("register/seler/", register.RegisterSelerView.as_view()),

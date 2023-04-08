@@ -23,6 +23,7 @@ boto3-stubs-lite = {extras = ["cognito-idp", "dynamodb", "s3"], version = "^1.26
 injector = "^0.20.1"
 django-polymorphic = "^3.1.0"
 django-redis = "^5.2.0"
+pydantic = "^1.10.7"
 
 
 [tool.poetry.group.dev.dependencies]

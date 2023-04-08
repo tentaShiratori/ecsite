@@ -4,6 +4,7 @@ from .product import Product
 
 
 class Report(models.Model):
+    id = models.AutoField(primary_key=True)
     cart = models.ForeignKey(Cart, on_delete=models.CASCADE)
     count = models.PositiveIntegerField()
     price = models.FloatField()
