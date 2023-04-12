@@ -1,19 +1,20 @@
-from src.auth.decorators.permission_required import login_required, permission_required
-from src.di import injector
-from rest_framework import serializers
-from rest_framework.schemas.openapi import AutoSchema
-from src.drivers.file_uploader import FileUploader
-from ..models import Product, User
-from django.http import Http404, HttpRequest
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.request import Request
-from rest_framework import status
 import logging
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.http import QueryDict
 from typing import cast
-from src.models import Seler, Admin
+
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.http import Http404, HttpRequest, QueryDict
+from rest_framework import serializers, status
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.schemas.openapi import AutoSchema
+from rest_framework.views import APIView
+from src.auth.decorators.permission_required import (login_required,
+                                                     permission_required)
+from src.di import injector
+from src.drivers.file_uploader import FileUploader
+from src.models import Admin, Seler
+
+from ..models import Product, User
 
 logger = logging.getLogger(__name__)
 

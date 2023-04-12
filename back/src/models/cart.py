@@ -1,3 +1,4 @@
+from typing import cast
 from django.db import models
 from .user import User
 

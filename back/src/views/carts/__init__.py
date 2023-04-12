@@ -1,19 +1,12 @@
-from src.auth.decorators.permission_required import login_required, permission_required
-from src.di import injector
-from rest_framework import serializers
-from rest_framework.schemas.openapi import AutoSchema
-from src.drivers.file_uploader import FileUploader
-from ...models import Cart, User
-from django.http import Http404, HttpRequest
-from rest_framework.views import APIView
-from rest_framework.response import Response
-from rest_framework.request import Request
-from rest_framework import status
 import logging
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.http import QueryDict
-from typing import cast
-from src.models import Seler, Admin
+
+from django.http import HttpRequest
+from rest_framework import serializers
+from rest_framework.response import Response
+from rest_framework.schemas.openapi import AutoSchema
+from rest_framework.views import APIView
+from src.auth.decorators.permission_required import login_required
+from src.repository.cart_repository import CartRepository
 
 logger = logging.getLogger(__name__)
 
@@ -23,14 +16,23 @@ class CustomSchema(AutoSchema):
         return CartSerializer()
 
 
-class CartSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Cart
-        fields = ["id", "user"]
+class ReportSerializer(serializers.Serializer):
+    count = serializers.IntegerField()
+    price = serializers.FloatField()
+    product_id = serializers.IntegerField()
+
+
+class CartSerializer(serializers.Serializer):
+    reports = ReportSerializer(many=True)
 
 
 class CartList(APIView):
     schema = CustomSchema()
 
+    @login_required
     def get(self, request: HttpRequest, format=None):
-        return Response(request.session["hello"])
+        print(request.user)
+        repository = CartRepository(request.user, request.session)
+        cart = repository.get_or_create()
+        serializer = CartSerializer(cart)
+        return Response(serializer.data)

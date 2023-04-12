@@ -15,5 +15,10 @@
     "**/amplify/backend/amplify-meta.json": true,
     "**/amplify/backend/awscloudformation": true
   },
-  "python.analysis.stubPath": "back/typings"
+  "python.analysis.stubPath": "back/typings",
+  "[python]": {
+    "editor.codeActionsOnSave": {
+      "source.organizeImports": true
+    }
+  }
 }

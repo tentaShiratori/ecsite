@@ -1,7 +1,7 @@
 from rest_framework.authentication import BaseAuthentication
 from django.http.request import HttpRequest
 from typing import Optional
-from src.drivers.user_claim_resolver import UserClaimsResolver
+from src.drivers.user_claims_resolver import UserClaimsResolver
 
 from src.models.user import User
 from src.di import injector

@@ -1,0 +1,12 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "delete merged branch",
+            "type": "shell",
+            "command": "git branch --merged | Where-Object {$_ -notmatch \\\"(^\\*|main|develop)\\\"} | forEach-Object { & git branch -d $($_.Trim()) } "
+        }
+    ]
+}

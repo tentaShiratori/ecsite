@@ -1,6 +1,5 @@
 from mypy_boto3_cognito_idp import CognitoIdentityProviderClient
 from injector import inject
-import boto3
 from mypy_boto3_cognito_idp.type_defs import (
     GetUserResponseTypeDef,
     AttributeTypeTypeDef,
@@ -8,6 +7,7 @@ from mypy_boto3_cognito_idp.type_defs import (
 from botocore.exceptions import ClientError
 from dataclasses import dataclass
 from typing import NewType, List, Optional
+from django.conf import settings
 
 UserSub = NewType("UserSub", str)
 UserEmail = NewType("UserEmail", str)

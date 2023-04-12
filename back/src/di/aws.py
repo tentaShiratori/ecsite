@@ -14,4 +14,7 @@ class AWSModule(Module):
     @singleton
     @provider
     def cognito_client(self) -> CognitoIdentityProviderClient:
-        return boto3.client("cognito-idp", region_name="ap-northeast-1")
+        return boto3.client(
+            "cognito-idp",
+            region_name="ap-northeast-1",
+        )

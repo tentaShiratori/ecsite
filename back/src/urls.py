@@ -1,7 +1,6 @@
 from django.urls import include, path
-from .views import products
-from .views import register
-from .views import carts
+
+from .views import carts, products, register
 from .views.carts import urls as cart_urls
 
 urlpatterns = [

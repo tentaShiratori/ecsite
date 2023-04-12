@@ -9,4 +9,4 @@ class Report(BaseModel):
 
 
 class Cart(BaseModel):
-    report: List[Report]
+    reports: List[Report]
